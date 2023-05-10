@@ -91,9 +91,14 @@ class CodelabActivity : AppCompatActivity() {
       }
 
       // TODO: Enable the Geospatial API, the Streetscape Geometry API, and the Depth API.
-
-
-
+      val isDepthSupported = session.isDepthModeSupported(Config.DepthMode.AUTOMATIC)
+      val isGeospatialSupported = session.isGeospatialModeSupported(Config.GeospatialMode.ENABLED)
+      if (isDepthSupported && isGeospatialSupported) {
+        // These three settings are needed to use Geospatial Depth.
+        geospatialMode = Config.GeospatialMode.ENABLED
+        streetscapeGeometryMode = Config.StreetscapeGeometryMode.ENABLED
+        depthMode = Config.DepthMode.AUTOMATIC
+      }
     })
   }
 
