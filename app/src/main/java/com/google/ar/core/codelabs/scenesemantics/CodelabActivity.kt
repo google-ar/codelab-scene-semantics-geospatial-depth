@@ -86,8 +86,9 @@ class CodelabActivity : AppCompatActivity() {
   fun configureSession(session: Session) {
     session.configure(session.config.apply {
       // TODO: Enable the Scene Semantics API.
-
-
+      if (session.isSemanticModeSupported(Config.SemanticMode.ENABLED)) {
+        semanticMode = Config.SemanticMode.ENABLED
+      }
 
       // TODO: Enable the Geospatial API, the Streetscape Geometry API, and the Depth API.
 

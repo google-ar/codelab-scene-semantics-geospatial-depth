@@ -182,10 +182,19 @@ class CodelabRenderer(val activity: CodelabActivity) :
 
     try {
       // TODO: Obtain the semantic image for this frame.
+      frame.acquireSemanticImage().use { image ->
+        semanticRenderer.updateCameraSemanticsTexture(image)
+        activity.view.semanticLabelAtCenter = getLabelAt(image, image.width/2, image.height/2)
+      }
 
       // TODO: Obtain the confidence image for this frame.
+      frame.acquireSemanticConfidenceImage().use { image ->
+        semanticRenderer.updateConfidenceSemanticsTexture(image)
+        activity.view.confidenceAtCenter = getConfidenceAt(image, image.width/2, image.height/2)
+      }
 
       // TODO: Obtain the prevalence of the selected label for this frame.
+      activity.view.fractionOfLabel = frame.getSemanticLabelFraction(activity.view.selectedSemanticLabel)
 
     } catch (e: NotYetAvailableException) {
       // No semantic information is available.
